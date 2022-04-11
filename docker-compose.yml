@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  web:
+    build: . # path to Dockerfile
+    command: python3 /app/app/api/start.py
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
