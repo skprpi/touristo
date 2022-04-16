@@ -14,5 +14,5 @@ class Credentials:
 
     @classmethod
     def get_database_url(cls):
-        return f'postgresql+asyncpg://{cls.POSTGRES_USER}:{cls.POSTGRES_PASSWORD}@' \
-            f'{cls.POSTGRES_SERVER}/{cls.POSTGRES_DB}'
+        return f'postgresql+psycopg2://{cls.POSTGRES_USER}:{cls.POSTGRES_PASSWORD}' \
+            f'@{cls.POSTGRES_SERVER}:{cls.POSTGRES_PORT}/{cls.POSTGRES_DB}'

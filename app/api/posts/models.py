@@ -1,24 +1,12 @@
-import sqlalchemy
-from ..common.db import metadata
+from  sqlalchemy import Column, Integer, Text, DateTime
+from ..common.db import Base
 from datetime import datetime
 
 
-posts = sqlalchemy.Table(
-    'posts',
-    metadata,
-    sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True),
-    sqlalchemy.Column("text", sqlalchemy.Text),
-    sqlalchemy.Column("created_at", sqlalchemy.DateTime, default=datetime.utcnow),
-    sqlalchemy.Column("photo", sqlalchemy.Text),
-)
+class Post(Base):
+    __tablename__ = "posts"
 
-# class Posts(Base):
-
-#     __tablename__ = "posts"
-
-#     id = sqlalchemy.Column(sqlalchemy.Integer, autoincrement=True, primary_key=True, index=True)
-#     text = sqlalchemy.Column(sqlalchemy.Text)
-#     created_at = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.utcnow)
-#     photo = sqlalchemy.Column(sqlalchemy.Text)
-
-
+    id = Column(Integer, autoincrement=True, primary_key=True, index=True)
+    text = Column(Text)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    photo = Column(Text)

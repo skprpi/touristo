@@ -1,27 +1,16 @@
 import pytest
-import asyncio
-from fastapi import status
-from httpx import AsyncClient
 
-from ..api.common.db import get_db
-from .common.db import override_get_db, init_db
-from ..main import app
+from .db import client, fastapi_app
 
-import asyncio
+# from ..main import app
 
-
-asyncio.run(init_db())
-app.dependency_overrides[get_db] = override_get_db
-
-
-@pytest.mark.anyio
-async def test_post_create():
+def test_create_post():
     # db.database.disconnect()
-    async with AsyncClient(app=app, base_url="http://test") as client:
-        responce = await client.post(
-           '/post',
-           json={"text": "111string111", "photo": "111string111"},
-        )
-    assert responce.status_code == status.HTTP_200_OK
-    print(responce.json())
+    response = client.post(
+        fastapi_app.url_path_for('create_post'),
+        json={'text': 'testing text', 'photo': 'test photo'},
+    )
+    print(response.json())
+    assert response.json() == '1'
+
     

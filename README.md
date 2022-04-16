@@ -17,10 +17,18 @@ docker-compose build
 docker-compose up
 docker-compose down
 
-# Linker (flake8)
+# Linter (flake8)
 
 flake8 api tests
 
 # Tests
 
-pytest .\app\tests\test.py --asyncio-mode=strict
+pytest .\app\tests\test.py
+
+# Migrations
+
+alembic init migrations
+
+
+alembic revision --autogenerate -m "Init migration"
+alembic upgrade head
