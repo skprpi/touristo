@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  web:
+    build: . # path to Dockerfile
+    command: uvicorn app.main:fastapi_app --host 0.0.0.0 --port 80 #python3 /app/app/main.py
+    volumes:
+      - .:/app
+    ports:
+      - 80:80
+      - 5432:5432
+    expose:
+      - 5432
