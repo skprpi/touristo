@@ -1,10 +1,10 @@
-from .credentials import Credentials
+from .credentials import CredentialsDB
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 
-DATABASE_URL = Credentials.get_database_url()
+DATABASE_URL = CredentialsDB.get_database_url()
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
