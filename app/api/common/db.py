@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 
 DATABASE_URL = CredentialsDB.get_database_url()
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(DATABASE_URL, sslmode='require')
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
