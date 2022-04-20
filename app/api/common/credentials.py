@@ -16,7 +16,7 @@ class CredentialsDB:
     def get_database_url(cls):
         # return f'postgresql+psycopg2://{cls.POSTGRES_USER}:{cls.POSTGRES_PASSWORD}' \
             # f'@{cls.POSTGRES_SERVER}:{cls.POSTGRES_PORT}/{cls.POSTGRES_DB}'
-        return 'postgresql+psycopg2://tnqrjszpbdwfzo:59deba175f8192f1c274efda57a62ec4f9f7d656078bf69d1c8bc4d640267414@ec2-99-80-170-190.eu-west-1.compute.amazonaws.com:5432/d6map5821v2dop'
+        return 'postgresql+psycopg2://jtlvyhctfevcwz:d51f070f3eeb305dce27536c45395896e6ed9a0d85e229c41005745824af841a@ec2-99-81-137-11.eu-west-1.compute.amazonaws.com:5432/d6d6d1leanpbnn'
 
 
 class CredentialsJWT:
