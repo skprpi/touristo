@@ -37,4 +37,5 @@ alembic revision --autogenerate -m "Init migration"
 alembic upgrade head
 
 # Heroku Migrations
+heroku run alembic revision --autogenerate -m "Init migration"
 heroku run alembic upgrade head
