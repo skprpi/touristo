@@ -9,4 +9,4 @@ class Post(Base):
     id = Column(Integer, autoincrement=True, primary_key=True, index=True)
     text = Column(Text)
     created_at = Column(DateTime, default=datetime.utcnow)
-    photo = Column(Text)
+    photo_url = Column(Text)

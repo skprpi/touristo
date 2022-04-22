@@ -6,7 +6,7 @@ class Post(BaseModel):
     id: int
     text: str
     created_at: datetime.datetime
-    photo: str
+    photo_url: str
 
     class Config:
         orm_mode = True
@@ -17,7 +17,6 @@ class Post(BaseModel):
 
 class CreatePost(BaseModel):
     text: str
-    photo: str
 
     class Config:
         orm_mode = True
