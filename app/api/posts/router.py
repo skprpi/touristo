@@ -15,8 +15,8 @@ post_router = APIRouter(
 
 
 @post_router.post('')
-def create_post(request: schemas.CreatePost, photo: UploadFile = File(...), db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    photo_file_name = str(current_user.id) + '.' + str(uuid.uuid4())
+def create_post(request: schemas.CreatePost, photo: UploadFile = File(...), db: Session = Depends(get_db)):
+    photo_file_name = str(uuid.uuid4())
     with open(f'photo_file_name', 'wb') as buffer:
         shutil.copyfileobj(photo.file, buffer)
     new_post = Post(**request.dict(), photo_url = photo_file_name)
