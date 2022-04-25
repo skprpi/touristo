@@ -7,6 +7,7 @@ from ..common.schemas import User
 from ..common.token_auth import get_current_user
 import shutil
 import uuid
+import sys
 
 post_router = APIRouter(
     prefix='/post',
@@ -18,6 +19,7 @@ post_router = APIRouter(
 def create_post(request: schemas.CreatePost, photo: UploadFile = File(...), db: Session = Depends(get_db)):
     photo_file_name = str(uuid.uuid4())
     print('file name = ', photo_file_name)
+    sys.stdout.flush()
     with open(f'photo_file_name', 'wb') as buffer:
         shutil.copyfileobj(photo.file, buffer)
     new_post = Post(**request.dict(), photo_url = photo_file_name)
