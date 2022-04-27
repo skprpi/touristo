@@ -15,9 +15,9 @@ class CredentialsDB:
 
     @classmethod
     def get_database_url(cls):
-        # return f'postgresql+psycopg2://{cls.POSTGRES_USER}:{cls.POSTGRES_PASSWORD}' \
-            # f'@{cls.POSTGRES_SERVER}:{cls.POSTGRES_PORT}/{cls.POSTGRES_DB}'
-        return f'postgresql+psycopg2://{cls.HEROKU_URL}'
+        return f'postgresql+psycopg2://{cls.POSTGRES_USER}:{cls.POSTGRES_PASSWORD}' \
+            f'@{cls.POSTGRES_SERVER}:{cls.POSTGRES_PORT}/{cls.POSTGRES_DB}'
+        # return f'postgresql+psycopg2://{cls.HEROKU_URL}'
 
 
 class CredentialsJWT:

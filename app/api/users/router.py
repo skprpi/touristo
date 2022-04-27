@@ -16,7 +16,7 @@ user_router = APIRouter(
 
 
 @user_router.post('', response_model=CommonUser)
-def create_post(request: schemas.CreateUser, db: Session = Depends(get_db)):
+def create_user(request: schemas.CreateUser, db: Session = Depends(get_db)):
     hashed_password = Hasher.bcrypt(request.password)
     fields = request.dict()
     del fields['password']

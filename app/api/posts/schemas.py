@@ -1,5 +1,6 @@
 import datetime
 from pydantic import BaseModel
+from fastapi import Form
 
 
 class Post(BaseModel):
@@ -20,3 +21,7 @@ class CreatePost(BaseModel):
 
     class Config:
         orm_mode = True
+    
+    @classmethod
+    def as_form(cls, text: str = Form(...))  -> 'CreatePost':
+        return cls(text=text)

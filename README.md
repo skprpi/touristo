@@ -10,7 +10,7 @@ pip3 freeze > requirements.txt
 # Run app
 
 python .\app\main.py
-uvicorn app.main:fastapi_app --host 0.0.0.0 --port 80
+uvicorn app.main:fastapi_app --host 127.0.0.1 --port 80
 
 # Doker
 
