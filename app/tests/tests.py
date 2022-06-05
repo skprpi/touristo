@@ -3,6 +3,7 @@ from fastapi.testclient import TestClient
 from fastapi import status
 from .test_class.location import LocationTest
 from typing import Union
+from .test_fixture import get_test_client_and_jwt
 
 
 # Location test
