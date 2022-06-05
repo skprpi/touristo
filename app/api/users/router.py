@@ -8,15 +8,14 @@ from fastapi.security import OAuth2PasswordRequestForm
 from .token import create_access_token
 from ..common.schemas import User as CommonUser
 from ..common.token_auth import get_current_user
-from ..common.orm_wrapper import SQLAlchemyWrap
 from . repository import UserRepository
-from fastapi import status
 
 
 user_router = APIRouter(
     prefix='/user',
     tags=['user'],
 )
+
 
 user_repository = UserRepository()
 
@@ -36,20 +35,20 @@ login_router = APIRouter(
     tags=['login'],
 )
 
+
 @login_router.post('', status_code=status.HTTP_200_OK)
 def login(request: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = db.query(User).filter(User.email == request.username).first()
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f'Invalid credentials',
+            detail='Invalid credentials',
         )
     if not Hasher.verify(user.hashed_password, request.password):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f'Invalid password',
+            detail='Invalid password',
         )
-    
     # generate JWT token
     access_token = create_access_token(data={'sub': user.email})
     return {'access_token': access_token,  'token_type': 'Bearer'}

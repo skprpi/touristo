@@ -1,10 +1,8 @@
 import datetime
 from pydantic import BaseModel
-from fastapi import Form
-from ..common.schemas import User
+
 
 class CreateLocation(BaseModel):
-
     lat: float
     lng: float
     address: str
@@ -16,19 +14,18 @@ class CreateLocation(BaseModel):
 
     class Config:
         orm_mode = True
-    
+
     def __str__(self):
         return f'title {self.title}'
 
-class Location(CreateLocation):
 
+class Location(CreateLocation):
     id: int
     created_at: datetime.datetime
     user_id: int
 
     class Config:
         orm_mode = True
-    
+
     def __str__(self):
         return f'id {self.id}, title {self.title}'
-

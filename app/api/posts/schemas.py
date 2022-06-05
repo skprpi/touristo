@@ -11,7 +11,7 @@ class Post(BaseModel):
 
     class Config:
         orm_mode = True
-    
+
     def __str__(self):
         return f'id {self.id}, text {self.text}'
 
@@ -21,7 +21,7 @@ class CreatePost(BaseModel):
 
     class Config:
         orm_mode = True
-    
+
     @classmethod
-    def as_form(cls, text: str = Form(...))  -> 'CreatePost':
+    def as_form(cls, text: str = Form(...)) -> 'CreatePost':
         return cls(text=text)

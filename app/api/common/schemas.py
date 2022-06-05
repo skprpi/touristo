@@ -1,6 +1,7 @@
 import datetime
 from pydantic import BaseModel
 
+
 class User(BaseModel):
     id: int
     nickname: str
@@ -10,7 +11,7 @@ class User(BaseModel):
 
     class Config:
         orm_mode = True
-    
+
     def __str__(self):
         return f'id {self.id}, email {self.email}'
 
@@ -20,6 +21,6 @@ class CurrentUser(User):
 
     class Config:
         orm_mode = True
-    
+
     def __str__(self):
         return f'id {self.id}, email {self.email}'

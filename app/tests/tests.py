@@ -1,14 +1,12 @@
 # import pytest
-from .tests_db import fastapi_app
 from fastapi.testclient import TestClient
 from fastapi import status
-from .test_fixture import get_test_client_and_jwt
 from .test_class.location import LocationTest
 from typing import Union
 
 
-#######################################################
-## Location test
+# Location test
+
 
 def test_create_location(get_test_client_and_jwt: Union[TestClient, str]):
     client, jwt = get_test_client_and_jwt
@@ -27,4 +25,3 @@ def test_get_location(get_test_client_and_jwt: Union[TestClient, str]):
     get_responce = test_location.get_by_id(new_location_id)
     assert get_responce.status_code == status.HTTP_200_OK
     assert get_responce.json()['id'] == new_location_id
-

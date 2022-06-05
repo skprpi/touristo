@@ -6,14 +6,15 @@ from pydantic import BaseModel
 from ..common.schemas import CurrentUser
 from sqlalchemy.orm import Session
 from .db import get_db
-from .orm_wrapper import SQLAlchemyWrap
 from ..users.models import User
+
 
 class TokenData(BaseModel):
     email: str
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl=CredentialsJWT.JWT_TOKEN_URL)
+
 
 def verify_token(token: str, credentials_exception):
     try:
@@ -27,7 +28,7 @@ def verify_token(token: str, credentials_exception):
         raise credentials_exception
 
 
-def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)) -> CurrentUser:
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -36,6 +37,5 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     token_data: TokenData = verify_token(token, credentials_exception)
     instance = db.query(User).filter(User.email == token_data.email).first()
     if not instance:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-            detail=f'User does not exist')
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='User does not exist')
     return instance

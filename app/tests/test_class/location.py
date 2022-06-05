@@ -1,8 +1,8 @@
 from ..tests_db import fastapi_app
 from fastapi.testclient import TestClient
 
-class LocationTest:
 
+class LocationTest:
     def __init__(self, client: TestClient, jwt: str) -> None:
         self.client = client
         self.jwt = jwt
@@ -35,5 +35,3 @@ class LocationTest:
             }
         )
         return response
-
-

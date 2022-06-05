@@ -1,5 +1,4 @@
 from sqlalchemy import Column, Integer, Text, DateTime, Float, ForeignKey
-from sqlalchemy.orm import relationship
 from ..common.db import Base
 from datetime import datetime
 
@@ -17,4 +16,4 @@ class Location(Base):
     lighting_type = Column(Text, nullable=False)
     visiting_type = Column(Text, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
-    user_id = Column(Integer, ForeignKey('users.id'), index=True, nullable=False) # delete default Nonr
+    user_id = Column(Integer, ForeignKey('users.id'), index=True, nullable=False)

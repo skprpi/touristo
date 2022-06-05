@@ -5,6 +5,7 @@ from ..api.common.db import Base
 from fastapi import status
 from fastapi.testclient import TestClient
 
+
 @pytest.fixture()
 def get_test_client_and_jwt() -> Union[TestClient, str]:
     Base.metadata.drop_all(bind=engine)
@@ -33,5 +34,3 @@ def get_test_client_and_jwt() -> Union[TestClient, str]:
     assert jwt_json['token_type'] != ''
     assert jwt_json['access_token'] != ''
     return client, f"{jwt_json['token_type']} {jwt_json['access_token']}"
-
-

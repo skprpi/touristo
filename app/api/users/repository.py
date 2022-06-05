@@ -1,4 +1,3 @@
-from app.api.common.decorators import superuser
 from . import schemas
 from .hashing import Hasher
 from sqlalchemy.orm import Session
@@ -6,13 +5,10 @@ from ..common.orm_wrapper import SQLAlchemyWrap
 from .models import User
 
 
-
-
-
 class UserRepository:
     def __init__(self):
         self.orm_wrap = SQLAlchemyWrap(model_class=User)
-    
+
     def get_by_id(self, user_id, db: Session, current_user):
         return self.orm_wrap.get_by_id(user_id, db, current_user)
 
@@ -28,4 +24,3 @@ class UserRepository:
         del fields['password']
         fields['hashed_password'] = hashed_password
         return fields
-
