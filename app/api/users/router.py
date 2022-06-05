@@ -7,6 +7,10 @@ from .hashing import Hasher
 from fastapi.security import OAuth2PasswordRequestForm
 from .token import create_access_token
 from ..common.schemas import User as CommonUser
+from ..common.token_auth import get_current_user
+from ..common.orm_wrapper import SQLAlchemyWrap
+from . repository import UserRepository
+from fastapi import status
 
 
 user_router = APIRouter(
@@ -14,18 +18,17 @@ user_router = APIRouter(
     tags=['user'],
 )
 
+user_repository = UserRepository()
 
-@user_router.post('', response_model=CommonUser)
+
+@user_router.post('', response_model=CommonUser, status_code=status.HTTP_201_CREATED)
 def create_user(request: schemas.CreateUser, db: Session = Depends(get_db)):
-    hashed_password = Hasher.bcrypt(request.password)
-    fields = request.dict()
-    del fields['password']
+    return user_repository.create(request, db)
 
-    new_user = User(**fields, hashed_password=hashed_password)
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
-    return new_user
+
+@user_router.get('/{user_id}', response_model=CommonUser, status_code=status.HTTP_200_OK)
+def get_user(user_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    return user_repository.get_by_id(user_id, db, current_user)
 
 
 login_router = APIRouter(
@@ -33,7 +36,7 @@ login_router = APIRouter(
     tags=['login'],
 )
 
-@login_router.post('')
+@login_router.post('', status_code=status.HTTP_200_OK)
 def login(request: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = db.query(User).filter(User.email == request.username).first()
     if not user:
@@ -49,4 +52,4 @@ def login(request: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(
     
     # generate JWT token
     access_token = create_access_token(data={'sub': user.email})
-    return {'access_token': access_token,  'token_type': 'bearer'}
+    return {'access_token': access_token,  'token_type': 'Bearer'}

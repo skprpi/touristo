@@ -1,24 +1,18 @@
 from . import schemas
-from fastapi import APIRouter, HTTPException, status, Depends
-# from .models import posts
-# from ..common.db import database
-from sqlalchemy import select
-from datetime import datetime
-from fastapi import APIRouter, Depends
-from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi import UploadFile
+import shutil
+import uuid
 
+def generate_image_file_name():
+    return str(uuid.uuid4())
 
-# async def create_post(post: schemas.CreatePost):
-#     query = posts.insert()
-#     values = {**post.dict(), 'created_at': datetime.utcnow()}
-#     post_id = await database.execute(query=query, values=values)
-#     return {'id': post_id}
+def form_dict_create_post_file_name(request: schemas.CreatePost):
+    photo_file_name = generate_image_file_name()
+    fields = request.dict()
+    fields['photo_url'] = photo_file_name
+    return fields, photo_file_name
+    
 
-
-# async def get_post_all():
-#     query = posts.select()
-#     return await database.fetch_all(query=query)
-
-# async def get_post_by_id(post_id: int):
-#     query = posts.select().where(posts.c.id == post_id)
-#     return await database.fetch_one(query=query)
+def create_photo_file(photo_file_name: str, photo: UploadFile):
+    with open(f'app/staticfile/{photo_file_name}', 'wb') as buffer:
+        shutil.copyfileobj(photo.file, buffer)
