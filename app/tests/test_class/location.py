@@ -18,7 +18,7 @@ class LocationTest:
             }
         )
 
-    def create_location(self):
+    def create(self):
         response = self.client.post(
             fastapi_app.url_path_for(self.CONST_CREATE_FUNC_NAME),
             json={
@@ -37,7 +37,7 @@ class LocationTest:
         )
         return response
 
-    def partial_update_location(self, id, update_json):
+    def partial_update(self, id, update_json):
         response = self.client.patch(
             fastapi_app.url_path_for(self.CONST_UPDATE_FUNC_NAME, location_id=id),
             json=update_json,
