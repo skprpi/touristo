@@ -1,7 +1,10 @@
-FROM python:3.10
+FROM python:3.10.4
+
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
-COPY ./requirements.txt /app/requirements.txt
-RUN pip3 install -r /app/requirements.txt
+COPY ./requirements.txt .
+RUN pip3 install --upgrade pip
+RUN pip install -r ./requirements.txt
 COPY . /app
 EXPOSE 8000

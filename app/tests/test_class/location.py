@@ -8,6 +8,7 @@ class LocationTest:
         self.jwt = jwt
         self.CONST_GET_BY_ID_FUNC_NAME = 'get_location'
         self.CONST_CREATE_FUNC_NAME = 'create_location'
+        self.CONST_UPDATE_FUNC_NAME = 'update_location'
 
     def get_by_id(self, id):
         return self.client.get(
@@ -30,6 +31,16 @@ class LocationTest:
                 'lighting_type': 'lighting_type',
                 'visiting_type': 'visiting_type',
             },
+            headers={
+                'Authorization': self.jwt,
+            }
+        )
+        return response
+
+    def partial_update_location(self, id, update_json):
+        response = self.client.patch(
+            fastapi_app.url_path_for(self.CONST_UPDATE_FUNC_NAME, location_id=id),
+            json=update_json,
             headers={
                 'Authorization': self.jwt,
             }
