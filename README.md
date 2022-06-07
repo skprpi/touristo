@@ -1,69 +1,56 @@
-# Start environment
+# Windows
 
-.\venv\Scripts\activate
+## Start without environment
 
-# Requirements
+```
+python3 -m venv venv
+pip install -r requirements.txt
+activate venv
+```
 
-pip3 install -r .\requirements.txt
-pip3 freeze > requirements.txt
 
-# Run app
+## Linter falke8 (needs venv)
 
-python .\app\main.py
+```
+flake8 .
+```
+
+## Run tests (needs venv)
+
+```
+pytest app/tests/tests.py
+```
+
+## Run app (needs venv)
+
+```
 uvicorn app.main:fastapi_app --host 127.0.0.1 --port 8080
-
-# Doker
-
-docker-compose build
-docker-compose up
-docker-compose down
-
-http://localhost:80
-
-# Linter (flake8)
-
-flake8 api tests
-
-# Tests
-
-pytest .\app\tests\test.py
-
-# Migrations
-
-alembic init migrations
-
-
-alembic revision --autogenerate -m "Init migration"
-alembic upgrade head
-
-# Heroku Migrations
-heroku run alembic revision --autogenerate -m "Init migration"
-heroku run alembic upgrade head
-
-# Heroku logs
-
-heroku logs --tail
+```
 
 # Linux
 
-## activate env
-
+```
+python3 -m venv venv
+pip install -r requirements.txt
 . ./venv/bin/activate
 
-## Check postgres
+```
 
-sudo -i -u postgres
-service postgresql status
+## Tests
 
-## Create db
+```
+run_tests.sh
+```
 
-sudo -u postgres psql
+## Run app
 
-sudo createdb -U postgres test_touristo -h localhost
+```
+run.sh
+```
 
-# Reset
+# Docker-compose
 
-sudo dropdb -U postgres touristo -h localhost
-sudo createdb -U postgres touristo -h localhost
-
-
+```
+docker-compose build
+docker-compose up
+```
