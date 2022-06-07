@@ -19,3 +19,5 @@ jobs:
           pip install -r requirements.txt
       - name: Linter (flake8)
         run: flake8 .
+      - name: Tests
+        run: pytest app/tests/tests.py

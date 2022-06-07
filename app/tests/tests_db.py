@@ -1,10 +1,9 @@
-from .credentials import Credentials
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from ..api.common.db import get_db
 from ..main import fastapi_app
 
-DATABASE_URL = Credentials.get_database_url()
+DATABASE_URL = 'sqlite:///./test.db'
 engine = create_engine(DATABASE_URL)
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
