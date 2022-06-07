@@ -7,5 +7,6 @@ __pycache__
 migrations/versions/*
 
 test.db
+sql_app.db
 
 !.gitkeep

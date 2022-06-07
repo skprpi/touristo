@@ -1,19 +1,12 @@
 version: "3.9"
 services:
-  db:
-    container_name: db
-    image: postgres
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=test_touristo
-      - POSTGRES_SERVER=127.0.0.1
-
   app:
     build: .
     container_name: touristo
-    command: pytest app/tests/tests.py
+    command: uvicorn app.main:fastapi_app --host 0.0.0.0 --port 8000
+    ports:
+      - 8000:8000
+    environment:
+      - SQLITE_PATH=/sql_app.db
     volumes:
       - .:/app
-    depends_on:
-      - db
