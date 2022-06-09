@@ -16,12 +16,13 @@ post_router = APIRouter(
 post_orm_wrap = PostORMWrap(model_class=Post)
 
 
-@post_router.post('', status_code=status.HTTP_201_CREATED)
-def create_post(request: schemas.CreatePost = Depends(schemas.CreatePost.as_form),
+@post_router.post('/{location_id}', response_model=schemas.Post, status_code=status.HTTP_201_CREATED)
+def create_post(location_id: int,
+                request: schemas.CreatePost = Depends(schemas.CreatePost.as_form),
                 photo: UploadFile = File(...),
                 db: Session = Depends(get_db),
                 current_user: User = Depends(get_current_user)):
-    return post_orm_wrap.create(request, photo, db, current_user)
+    return post_orm_wrap.create(location_id, request, photo, db, current_user)
 
 
 @post_router.get('/{post_id}', response_model=schemas.Post, status_code=status.HTTP_200_OK)

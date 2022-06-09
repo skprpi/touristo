@@ -5,15 +5,22 @@ from ..common.schemas import CurrentUser
 from fastapi import UploadFile
 import shutil
 import uuid
+from ..locations.router import location_orm
 
 
 class PostORMWrap(SQLAlchemyWrap):
     def __init__(self, model_class):
         super().__init__(model_class)
 
-    def create(self, request: schemas.CreatePost, photo: UploadFile, db: Session, current_user: CurrentUser):
+    def create(self, location_id: int, request: schemas.CreatePost, photo: UploadFile,
+               db: Session, current_user: CurrentUser):
         fields, photo_file_name = self._form_dict_create_post_file_name(request)
         self._create_photo_file(photo_file_name, photo)
+        fields['user_id'] = current_user.id
+        fields['user'] = current_user
+        location = location_orm.get_by_id(location_id, db, current_user)
+        fields['location_id'] = location_id
+        fields['location'] = location
         return super().create(fields, db, current_user)
 
     def _generate_image_file_name(self):

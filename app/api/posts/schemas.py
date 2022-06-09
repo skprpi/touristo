@@ -2,6 +2,8 @@ import datetime
 from pydantic import BaseModel
 from fastapi import Form
 from typing import Optional
+from ..common.schemas import CurrentUser
+from ..locations.schemas import Location
 
 
 class Post(BaseModel):
@@ -9,6 +11,10 @@ class Post(BaseModel):
     text: str
     created_at: datetime.datetime
     photo_url: str
+    price: int
+    tag: str
+    user: CurrentUser
+    location: Location
 
     class Config:
         orm_mode = True
@@ -18,6 +24,8 @@ class Post(BaseModel):
 
 
 class PartialUpdatePost(BaseModel):
+    price: Optional[int]
+    tag: Optional[str]
     text: Optional[str]
 
     class Config:
@@ -28,11 +36,13 @@ class PartialUpdatePost(BaseModel):
 
 
 class CreatePost(BaseModel):
+    price: str
+    tag: str
     text: str
 
     class Config:
         orm_mode = True
 
     @classmethod
-    def as_form(cls, text: str = Form(...)) -> 'CreatePost':
-        return cls(text=text)
+    def as_form(cls, text: str = Form(...), price: int = Form(...), tag: str = Form(...)) -> 'CreatePost':
+        return cls(text=text, price=price, tag=tag)

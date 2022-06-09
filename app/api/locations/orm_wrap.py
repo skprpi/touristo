@@ -11,4 +11,5 @@ class LocationORMWrap(SQLAlchemyWrap):
     def create(self, request: schemas.CreateLocation, db: Session, current_user: CurrentUser):
         fields = request.dict()
         fields['user_id'] = current_user.id
+        fields['user'] = current_user
         return super().create(fields, db, current_user)

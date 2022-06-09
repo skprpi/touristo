@@ -8,12 +8,19 @@ from .test_fixture import get_test_client_and_jwt
 
 
 # Post test
+def get_new_location_id(client, jwt):
+    test_location = LocationTest(client, jwt)
+    result = test_location.create()
+    return result.json()['id']
 
 
 def test_create_post(get_test_client_and_jwt: Union[TestClient, str]):
     client, jwt = get_test_client_and_jwt
     test_post = PostTest(client, jwt)
-    response = test_post.create()
+    location_id = get_new_location_id(client, jwt)
+    expected_location_id = 1
+    assert location_id == expected_location_id
+    response = test_post.create(location_id)
     expected_new_id = 1
     assert response.status_code == status.HTTP_201_CREATED
     assert response.json()['id'] == expected_new_id
@@ -22,7 +29,10 @@ def test_create_post(get_test_client_and_jwt: Union[TestClient, str]):
 def test_get_post(get_test_client_and_jwt: Union[TestClient, str]):
     client, jwt = get_test_client_and_jwt
     test_post = PostTest(client, jwt)
-    create_response = test_post.create()
+    location_id = get_new_location_id(client, jwt)
+    expected_location_id = 1
+    assert location_id == expected_location_id
+    create_response = test_post.create(location_id)
     id = create_response.json()['id']
     assert id == 1
     response = test_post.get_by_id(id)
@@ -33,7 +43,10 @@ def test_get_post(get_test_client_and_jwt: Union[TestClient, str]):
 def test_update_post(get_test_client_and_jwt: Union[TestClient, str]):
     client, jwt = get_test_client_and_jwt
     test_post = PostTest(client, jwt)
-    create_response = test_post.create()
+    location_id = get_new_location_id(client, jwt)
+    expected_location_id = 1
+    assert location_id == expected_location_id
+    create_response = test_post.create(location_id)
     id = create_response.json()['id']
     assert id == 1
     new_text = 'Other text'

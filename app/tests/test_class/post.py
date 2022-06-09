@@ -19,20 +19,23 @@ class PostTest:
             }
         )
 
-    def create(self):
+    def create(self, location_id):
         filepath = f'{os.path.dirname(os.path.abspath(__file__))}/data/testfile.jpeg'
         file = open(filepath, 'rb')
         response = self.client.post(
-            fastapi_app.url_path_for(self.CONST_CREATE_FUNC_NAME),
+            fastapi_app.url_path_for(self.CONST_CREATE_FUNC_NAME, location_id=location_id),
             data={
+                'location_id': location_id,
                 'text': 'some text',
+                'price': 100,
+                'tag': 'cat',
             },
             files={
-                'photo': ('photo', file, 'image/jpeg')
+                'photo': ('photo', file, 'image/jpeg'),
             },
             headers={
                 'Authorization': self.jwt,
-            }
+            },
         )
         return response
 

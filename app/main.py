@@ -4,6 +4,7 @@ from .api.locations.router import location_router
 from fastapi import FastAPI
 from .api.common.db import Base, engine
 
+# Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)
 
 fastapi_app = FastAPI()

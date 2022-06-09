@@ -1,6 +1,7 @@
 import datetime
 from pydantic import BaseModel
 from typing import Optional
+from ..common.schemas import CurrentUser
 
 
 class CreateLocation(BaseModel):
@@ -41,6 +42,7 @@ class Location(CreateLocation):
     id: int
     created_at: datetime.datetime
     user_id: int
+    user: CurrentUser
 
     class Config:
         orm_mode = True
