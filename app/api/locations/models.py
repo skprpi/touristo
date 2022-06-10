@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 class Location(Base):
-    __tablename__ = "location"
+    __tablename__ = 'location'
 
     id = Column(Integer, autoincrement=True, primary_key=True, index=True)
     lat = Column(Float, nullable=False)

@@ -5,7 +5,7 @@ from sqlalchemy.orm import relationship
 
 
 class Post(Base):
-    __tablename__ = "post"
+    __tablename__ = 'post'
 
     id = Column(Integer, autoincrement=True, primary_key=True, index=True)
     text = Column(String(20000), nullable=False)
