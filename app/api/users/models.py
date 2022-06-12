@@ -12,7 +12,7 @@ class User(Base):
     hashed_password = Column(Text, nullable=False)
     nickname = Column(String(30), unique=True, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
-    photo = Column(Text, nullable=False)
+    photo_url = Column(String(200), nullable=False)
     superuser = Column(Boolean, default=False, nullable=False)
 
     locations = relationship('Location', back_populates='user')

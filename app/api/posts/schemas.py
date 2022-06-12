@@ -1,12 +1,24 @@
 import datetime
 from pydantic import BaseModel
 from fastapi import Form
-from typing import Optional
+from typing import List, Optional
+
 from ..common.schemas import CurrentUser
 from ..locations.schemas import Location
+from ..comments.schemas import Comment
 
 
-class Post(BaseModel):
+class PostComments(BaseModel):
+    comments: List[Comment]
+
+    class Config:
+        orm_mode = True
+
+    def __str__(self):
+        return 'Not implemented'
+
+
+class PostWithoutLocation(BaseModel):
     id: int
     text: str
     created_at: datetime.datetime
@@ -14,6 +26,12 @@ class Post(BaseModel):
     price: int
     tag: str
     user: CurrentUser
+
+    class Config:
+        orm_mode = True
+
+
+class Post(PostWithoutLocation):
     location: Location
 
     class Config:

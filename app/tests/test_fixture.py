@@ -1,4 +1,5 @@
 import pytest
+import os
 from typing import Union
 from .tests_db import engine, fastapi_app
 from ..api.common.db import Base
@@ -10,16 +11,22 @@ from fastapi.testclient import TestClient
 def get_test_client_and_jwt() -> Union[TestClient, str]:
     Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
+
+    filepath = f'{os.path.dirname(os.path.abspath(__file__))}/test_class/data/testfile.jpeg'
+    file = open(filepath, 'rb')
+
     client = TestClient(fastapi_app)
     test_user_email = 'test_user@mail.ru'
     test_user_password = 'test_user_password'
     response = client.post(
         fastapi_app.url_path_for('create_user'),
-        json={
+        data={
             'nickname': 'test_user',
             'email': test_user_email,
             'password': test_user_password,
-            'photo': 'test_photo',
+        },
+        files={
+            'photo': ('photo', file, 'image/jpeg'),
         },
     )
     assert response.status_code == status.HTTP_201_CREATED

@@ -7,7 +7,7 @@ class User(BaseModel):
     nickname: str
     email: str
     created_at: datetime.datetime
-    photo: str
+    photo_url: str
 
     class Config:
         orm_mode = True

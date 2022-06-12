@@ -1,4 +1,5 @@
 from . import schemas
+from . import schemas_with_posts
 from fastapi import APIRouter, Depends, status
 from ..common.db import get_db
 from sqlalchemy.orm import Session
@@ -22,6 +23,14 @@ def create_location(request: schemas.CreateLocation,
                     db: Session = Depends(get_db),
                     current_user: CurrentUser = Depends(get_current_user)):
     return location_orm.create(request, db, current_user)
+
+
+@location_router.get('/{location_id}/posts/all', response_model=schemas_with_posts.LocationPosts,
+                     status_code=status.HTTP_200_OK)
+def get_location_posts(location_id: int,
+                       db: Session = Depends(get_db),
+                       current_user: CurrentUser = Depends(get_current_user)):
+    return location_orm.get_by_id(location_id, db, current_user)
 
 
 @location_router.get('/{location_id}', response_model=schemas.Location, status_code=status.HTTP_200_OK)

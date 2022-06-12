@@ -19,3 +19,5 @@ class Post(Base):
 
     location_id = Column(Integer, ForeignKey('location.id'), index=True, nullable=False)
     location = relationship('Location', back_populates='posts')
+
+    comments = relationship('Comment', back_populates='post')

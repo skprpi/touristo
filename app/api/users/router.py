@@ -1,5 +1,5 @@
 from . import schemas
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, status, Depends, UploadFile, File
 from ..common.db import get_db
 from .models import User
 from sqlalchemy.orm import Session
@@ -21,8 +21,10 @@ user_repository = UserRepository()
 
 
 @user_router.post('', response_model=CommonUser, status_code=status.HTTP_201_CREATED)
-def create_user(request: schemas.CreateUser, db: Session = Depends(get_db)):
-    return user_repository.create(request, db)
+def create_user(request: schemas.CreateUser = Depends(schemas.CreateUser.as_form),
+                photo: UploadFile = File(...),
+                db: Session = Depends(get_db)):
+    return user_repository.create(request, photo, db)
 
 
 @user_router.get('/{user_id}', response_model=CommonUser, status_code=status.HTTP_200_OK)
