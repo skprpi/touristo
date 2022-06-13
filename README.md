@@ -5,7 +5,7 @@
 ```
 python3 -m venv venv
 pip install -r requirements.txt
-activate venv
+.\venv\Scripts\activate
 ```
 
 
